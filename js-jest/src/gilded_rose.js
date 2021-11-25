@@ -25,21 +25,21 @@ class Shop {
       if (!isBrie && !isBackstagePass) {
         if (isQualityBiggerThan0) {
           if (!isSulfuras) {
-            item.quality = item.quality - 1;
+            item.quality--;
           }
         }
       } else {
         if (isQualityLessThan50) {
-          item.quality = item.quality + 1;
+          item.quality++;
           if (isBackstagePass) {
             if (daysToSellLessThan11) {
               if (isQualityLessThan50) {
-                item.quality = item.quality + 1;
+                item.quality++;
               }
             }
             if (daysToSellLessThan6) {
               if (isQualityLessThan50) {
-                item.quality = item.quality + 1;
+                item.quality++;
               }
             }
           }
@@ -55,15 +55,15 @@ class Shop {
           if (!isBackstagePass) {
             if (isQualityBiggerThan0) {
               if (!isSulfuras) {
-                item.quality = item.quality - 1;
+                item.quality--;
               }
             }
           } else {
-            item.quality = item.quality - item.quality;
+            item.quality = 0;
           }
         } else {
           if (isQualityLessThan50) {
-            item.quality = item.quality + 1;
+            item.quality++;
           }
         }
       }
