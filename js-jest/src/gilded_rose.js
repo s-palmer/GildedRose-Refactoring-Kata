@@ -22,27 +22,24 @@ class Shop {
       const daysToSellLessThan6 = item.sellIn < 6;
       const isRegularItem = !isSulfuras && !isBackstagePass && !isBrie;
 
-      // quality loop
       if (isRegularItem) {
         if (isQualityBiggerThan0) {
-            item.quality--;
+          item.quality--;
         }
-      } else {
-        if (isQualityLessThan50) {
-          item.quality++;
-          if (isBackstagePass) {
-            if (daysToSellLessThan11 && isQualityLessThan50) {
-                item.quality++;
-            }
-            if (daysToSellLessThan6 && isQualityLessThan50) {
-                item.quality++;
-            }
+      } else if (isQualityLessThan50) {
+        item.quality++;
+
+        if (isBackstagePass) {
+          if (daysToSellLessThan11) {
+            item.quality++;
+          }
+
+          if (daysToSellLessThan6) {
+            item.quality++;
           }
         }
-      };
+      }
 
-
-      // sellIn loop
       if (!isSulfuras) {
         item.sellIn--;
       }
@@ -52,10 +49,8 @@ class Shop {
       if (noDaysToSell) {
         if (!isBrie) {
           if (!isBackstagePass) {
-            if (isQualityBiggerThan0) {
-              if (!isSulfuras) {
-                item.quality--;
-              }
+            if (isQualityBiggerThan0 && !isSulfuras) {
+              item.quality--;
             }
           } else {
             item.quality = 0;
