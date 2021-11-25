@@ -48,7 +48,7 @@ class Shop {
 
       // sellIn loop
       if (!isSulfuras) {
-        item.sellIn = item.sellIn - 1;
+        item.sellIn--;
       }
       if (item.sellIn < 0) {
         if (!isBrie) {
