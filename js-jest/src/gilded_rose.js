@@ -19,7 +19,6 @@ class Shop {
       const isQualityBiggerThan0 = item.quality > 0;
       const isQualityLessThan50 = item.quality < 50;
 
-
       // quality loop
       if (!isBrie && !isBackstagePass) {
         if (isQualityBiggerThan0) {
