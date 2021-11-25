@@ -41,6 +41,13 @@ describe("Gilded Rose", function () {
     expect(gildedRose.items[0].quality).toBe(1);
   });
 
+  it("Aged Brie increases in quality 2x after its SellIn passes", function () {
+    gildedRose.items.push(new Item("Aged Brie", 2, 0));
+    gildedRose.updateQuality();
+
+    expect(gildedRose.items[0].quality).toBe(1);
+  });
+
   it("should allow a maximum quality of 50", function () {
     gildedRose.items.push(new Item("Aged Brie", 2, 0));
     for (let i = 0; i < 100; i++) {
