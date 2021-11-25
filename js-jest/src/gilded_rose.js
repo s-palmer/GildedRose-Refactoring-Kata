@@ -18,6 +18,8 @@ class Shop {
         item.name == "Backstage passes to a TAFKAL80ETC concert";
       const isQualityBiggerThan0 = item.quality > 0;
       const isQualityLessThan50 = item.quality < 50;
+      const daysToSellLessThan11 = item.sellIn < 11;
+      const daysToSellLessThan6 = item.sellIn < 6;
 
       // quality loop
       if (!isBrie && !isBackstagePass) {
@@ -30,12 +32,12 @@ class Shop {
         if (isQualityLessThan50) {
           item.quality = item.quality + 1;
           if (isBackstagePass) {
-            if (item.sellIn < 11) {
+            if (daysToSellLessThan11) {
               if (isQualityLessThan50) {
                 item.quality = item.quality + 1;
               }
             }
-            if (item.sellIn < 6) {
+            if (daysToSellLessThan6) {
               if (isQualityLessThan50) {
                 item.quality = item.quality + 1;
               }
