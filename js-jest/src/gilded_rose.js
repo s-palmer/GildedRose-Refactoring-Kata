@@ -20,27 +20,22 @@ class Shop {
       const isQualityLessThan50 = item.quality < 50;
       const daysToSellLessThan11 = item.sellIn < 11;
       const daysToSellLessThan6 = item.sellIn < 6;
+      const isRegularItem = !isSulfuras && !isBackstagePass && !isBrie;
 
       // quality loop
-      if (!isBrie && !isBackstagePass) {
+      if (isRegularItem) {
         if (isQualityBiggerThan0) {
-          if (!isSulfuras) {
             item.quality--;
-          }
         }
       } else {
         if (isQualityLessThan50) {
           item.quality++;
           if (isBackstagePass) {
-            if (daysToSellLessThan11) {
-              if (isQualityLessThan50) {
+            if (daysToSellLessThan11 && isQualityLessThan50) {
                 item.quality++;
-              }
             }
-            if (daysToSellLessThan6) {
-              if (isQualityLessThan50) {
+            if (daysToSellLessThan6 && isQualityLessThan50) {
                 item.quality++;
-              }
             }
           }
         }
