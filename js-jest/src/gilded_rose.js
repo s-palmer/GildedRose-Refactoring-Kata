@@ -44,13 +44,17 @@ class Shop {
             }
           }
         }
-      }
+      };
+
 
       // sellIn loop
       if (!isSulfuras) {
         item.sellIn--;
       }
-      if (item.sellIn < 0) {
+
+      const noDaysToSell = item.sellIn < 0;
+
+      if (noDaysToSell) {
         if (!isBrie) {
           if (!isBackstagePass) {
             if (isQualityBiggerThan0) {
