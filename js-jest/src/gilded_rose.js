@@ -36,16 +36,29 @@ const calculateQualityChangeBackstagePass = ({ sellIn, quality }) => {
   return +1;
 };
 
+const calculateQualityChangeConjuredItem = ({ sellIn, quality }) => {
+  const isQualityBiggerThan0 = quality > 0;
+  const noDaysToSell = sellIn < 0;
+
+  if (isQualityBiggerThan0 && noDaysToSell) return -4;
+  if (isQualityBiggerThan0) return -2;
+
+  return 0;
+}
+
+
 const calculateQualityChange = (item) => {
   const isBrie = item.name == "Aged Brie";
   const isBackstagePass =
     item.name == "Backstage passes to a TAFKAL80ETC concert";
   const isSulfuras = item.name == "Sulfuras, Hand of Ragnaros";
+  const isConjuredItem = item.name.includes("Conjured")
   const isQualityLessThan50 = item.quality < 50;
-  const isRegularItem = !isSulfuras && !isBackstagePass && !isBrie;
+  const isRegularItem = !isSulfuras && !isBackstagePass && !isBrie && !isConjuredItem;
 
   if (isRegularItem) return calculateQualityChangeNormalItem(item);
   if (isBackstagePass) return calculateQualityChangeBackstagePass(item);
+  if (isConjuredItem) return calculateQualityChangeConjuredItem(item);
   if (isBrie && isQualityLessThan50) return +1;
 
   return 0;

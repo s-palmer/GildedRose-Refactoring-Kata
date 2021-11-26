@@ -114,10 +114,10 @@ describe("Gilded Rose", function () {
     expect(gildedRose.items[0].quality).toBe(0);
   });
 
-  // it("Conjured items degrade in quality 2x as normal items", () => {
-  //   gildedRose.items.push(new Item("Conjured Mana Cake", 3, 6));
-  //   gildedRose.updateQuality();
-  //   expect(gildedRose.items[0].sellIn).toBe(2);
-  //   expect(gildedRose.items[0].quality).toBe(4);
-  // });
+  it("Conjured items degrade in quality 2x as normal items", () => {
+    gildedRose.items.push(new Item("Conjured Mana Cake", 3, 6));
+    gildedRose.updateQuality();
+    expect(gildedRose.items[0].sellIn).toBe(2);
+    expect(gildedRose.items[0].quality).toBe(4);
+  });
 });
