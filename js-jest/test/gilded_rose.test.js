@@ -59,28 +59,22 @@ describe("Gilded Rose", function () {
   });
 
   it("should allow a maximum quality of 50", () => {
-    gildedRose.items.push(new Item("Aged Brie", 2, 0));
-    for (let i = 0; i < 100; i++) {
-      gildedRose.updateQuality();
-    }
+    gildedRose.items.push(new Item("Aged Brie", 20, 50));
+    gildedRose.updateQuality();
 
     expect(gildedRose.items[0].quality).toBe(50);
   });
 
   it("should never decrease the quality of Sulfuras", () => {
     gildedRose.items.push(new Item("Sulfuras, Hand of Ragnaros", 0, 80));
-    for (let i = 0; i < 100; i++) {
-      gildedRose.updateQuality();
-    }
+    gildedRose.updateQuality();
 
     expect(gildedRose.items[0].quality).toBe(80);
   });
 
   it("Sulfuras never has to be sold", () => {
     gildedRose.items.push(new Item("Sulfuras, Hand of Ragnaros", 0, 80));
-    for (let i = 0; i < 100; i++) {
-      gildedRose.updateQuality();
-    }
+    gildedRose.updateQuality();
 
     expect(gildedRose.items[0].sellIn).toBe(0);
   });
@@ -89,8 +83,8 @@ describe("Gilded Rose", function () {
     gildedRose.items.push(
       new Item("Backstage passes to a TAFKAL80ETC concert", 9, 22)
     );
-      gildedRose.updateQuality();
-  
+    gildedRose.updateQuality();
+
     expect(gildedRose.items[0].sellIn).toBe(8);
     expect(gildedRose.items[0].quality).toBe(24);
   });
