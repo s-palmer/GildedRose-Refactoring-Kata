@@ -6,48 +6,56 @@ class Item {
   }
 }
 
+const calculateSellInChange = ({ sellIn, name }) => {
+  const isSulfuras = name == "Sulfuras, Hand of Ragnaros";
+
+  if (!isSulfuras) return -1;
+
+  return sellIn;
+};
+
+const calculateQualityChangeNormalItem = ({ sellIn, quality }) => {
+  const isQualityBiggerThan0 = quality > 0;
+  const noDaysToSell = sellIn < 0;
+
+  if (isQualityBiggerThan0 && noDaysToSell) return -2;
+  if (isQualityBiggerThan0) return -1;
+
+  return 0;
+};
+
+const calculateQualityChangeBackstagePass = ({ sellIn, quality }) => {
+  const daysToSellLessThan11 = sellIn < 11;
+  const daysToSellLessThan6 = sellIn < 6;
+  const areNoDaysToSell = sellIn < 0;
+
+  if (areNoDaysToSell) return -quality;
+  if (daysToSellLessThan6) return +3;
+  if (daysToSellLessThan11) return +2;
+
+  return +1;
+};
+
 class Shop {
   constructor(items = []) {
     this.items = items;
   }
+
   updateQuality() {
     this.items.forEach((item) => {
-      const isSulfuras = item.name == "Sulfuras, Hand of Ragnaros";
+      item.sellIn += calculateSellInChange(item);
+
       const isBrie = item.name == "Aged Brie";
       const isBackstagePass =
         item.name == "Backstage passes to a TAFKAL80ETC concert";
-      const isQualityBiggerThan0 = item.quality > 0;
+      const isSulfuras = item.name == "Sulfuras, Hand of Ragnaros";
       const isQualityLessThan50 = item.quality < 50;
-      const daysToSellLessThan11 = item.sellIn < 11;
-      const daysToSellLessThan6 = item.sellIn < 6;
       const isRegularItem = !isSulfuras && !isBackstagePass && !isBrie;
 
-      // Sell In only impacts items that are not Sulfuras
-
-      if (!isSulfuras) {
-        item.sellIn--;
-      }
-
-      const noDaysToSell = item.sellIn < 0;
-
       if (isRegularItem) {
-        if (isQualityBiggerThan0) {
-          item.quality--;
-          if (noDaysToSell) {
-            item.quality--;
-          }
-        }
+        item.quality += calculateQualityChangeNormalItem(item);
       } else if (isBackstagePass) {
-        item.quality++;
-        if (daysToSellLessThan11) {
-          item.quality++;
-        }
-        if (daysToSellLessThan6) {
-          item.quality++;
-        }
-        if (noDaysToSell) {
-          item.quality = 0;
-        }
+        item.quality += calculateQualityChangeBackstagePass(item);
       } else if (isBrie && isQualityLessThan50) {
         item.quality++;
       }
