@@ -21,7 +21,6 @@ class Shop {
       const daysToSellLessThan11 = item.sellIn < 11;
       const daysToSellLessThan6 = item.sellIn < 6;
       const isRegularItem = !isSulfuras && !isBackstagePass && !isBrie;
-      // const noDaysToSell = item.sellIn < 0;
 
       // Sell In only impacts items that are not Sulfuras
 
@@ -29,10 +28,12 @@ class Shop {
         item.sellIn--;
       }
 
+      const noDaysToSell = item.sellIn < 0;
+
       if (isRegularItem) {
         if (isQualityBiggerThan0) {
           item.quality--;
-          if (item.sellIn < 0) {
+          if (noDaysToSell) {
             item.quality--;
           }
         }
@@ -44,7 +45,7 @@ class Shop {
         if (daysToSellLessThan6) {
           item.quality++;
         }
-        if (item.sellIn < 0) {
+        if (noDaysToSell) {
           item.quality = 0;
         }
       } else if (isBrie && isQualityLessThan50) {
