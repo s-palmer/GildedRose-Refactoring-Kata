@@ -21,48 +21,36 @@ class Shop {
       const daysToSellLessThan11 = item.sellIn < 11;
       const daysToSellLessThan6 = item.sellIn < 6;
       const isRegularItem = !isSulfuras && !isBackstagePass && !isBrie;
+      // const noDaysToSell = item.sellIn < 0;
 
-      if (isRegularItem) {
-        if (isQualityBiggerThan0) {
-          item.quality--;
-        }
-      } else if (isQualityLessThan50) {
-        item.quality++;
-
-        if (isBackstagePass) {
-          if (daysToSellLessThan11) {
-            item.quality++;
-          }
-
-          if (daysToSellLessThan6) {
-            item.quality++;
-          }
-        }
-      }
+      // Sell In only impacts items that are not Sulfuras
 
       if (!isSulfuras) {
         item.sellIn--;
       }
 
-      const noDaysToSell = item.sellIn < 0;
-
-      if (noDaysToSell) {
-        if (!isBrie) {
-          if (!isBackstagePass) {
-            if (isQualityBiggerThan0 && !isSulfuras) {
-              item.quality--;
-            }
-          } else {
-            item.quality = 0;
-          }
-        } else {
-          if (isQualityLessThan50) {
-            item.quality++;
+      if (isRegularItem) {
+        if (isQualityBiggerThan0) {
+          item.quality--;
+          if (item.sellIn < 0) {
+            item.quality--;
           }
         }
+      } else if (isBackstagePass) {
+        item.quality++;
+        if (daysToSellLessThan11) {
+          item.quality++;
+        }
+        if (daysToSellLessThan6) {
+          item.quality++;
+        }
+        if (item.sellIn < 0) {
+          item.quality = 0;
+        }
+      } else if (isBrie && isQualityLessThan50) {
+        item.quality++;
       }
     });
-
     return this.items;
   }
 }

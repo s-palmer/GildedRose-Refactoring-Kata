@@ -9,7 +9,7 @@ describe("Gilded Rose", function () {
 
   it("should return correct result", () => {
     // The original items passed to the method
-    const storeItems = [
+    gildedRose.items = [
       new Item("+5 Dexterity Vest", 10, 20),
       new Item("Aged Brie", 2, 0),
       new Item("Elixir of the Mongoose", 5, 7),
@@ -24,13 +24,9 @@ describe("Gilded Rose", function () {
       new Item("Sulfuras, Hand of Ragnaros", 0, 80),
       new Item("Backstage passes to a TAFKAL80ETC concert", 14, 21)
     ];
-    gildedRose.items.push(storeItems);
     gildedRose.updateQuality();
-    const updateItems = gildedRose.items;
-    console.log(gildedRose);
-    console.log(gildedRose.items);
 
-    expect(updateItems).toStrictEqual(expectedResult);
+    expect(gildedRose.items).toStrictEqual(expectedResult);
   });
 
   it("not allow an item to have a negative value of quality", () => {
