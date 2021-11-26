@@ -36,31 +36,33 @@ const calculateQualityChangeBackstagePass = ({ sellIn, quality }) => {
   return +1;
 };
 
+const calculateQualityChange = (item) => {
+  const isBrie = item.name == "Aged Brie";
+  const isBackstagePass =
+    item.name == "Backstage passes to a TAFKAL80ETC concert";
+  const isSulfuras = item.name == "Sulfuras, Hand of Ragnaros";
+  const isQualityLessThan50 = item.quality < 50;
+  const isRegularItem = !isSulfuras && !isBackstagePass && !isBrie;
+
+  if (isRegularItem) return calculateQualityChangeNormalItem(item);
+  if (isBackstagePass) return calculateQualityChangeBackstagePass(item);
+  if (isBrie && isQualityLessThan50) return +1;
+
+  return 0;
+};
+
 class Shop {
   constructor(items = []) {
     this.items = items;
   }
 
   updateQuality() {
-    this.items.forEach((item) => {
+    return this.items.map((item) => {
       item.sellIn += calculateSellInChange(item);
+      item.quality += calculateQualityChange(item);
 
-      const isBrie = item.name == "Aged Brie";
-      const isBackstagePass =
-        item.name == "Backstage passes to a TAFKAL80ETC concert";
-      const isSulfuras = item.name == "Sulfuras, Hand of Ragnaros";
-      const isQualityLessThan50 = item.quality < 50;
-      const isRegularItem = !isSulfuras && !isBackstagePass && !isBrie;
-
-      if (isRegularItem) {
-        item.quality += calculateQualityChangeNormalItem(item);
-      } else if (isBackstagePass) {
-        item.quality += calculateQualityChangeBackstagePass(item);
-      } else if (isBrie && isQualityLessThan50) {
-        item.quality++;
-      }
+      return item;
     });
-    return this.items;
   }
 }
 
