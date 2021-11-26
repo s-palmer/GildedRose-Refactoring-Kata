@@ -9,7 +9,6 @@ Language: JavaScript
 ## Getting started
 
 Install dependencies
-git statu
 ```sh
 npm install
 ```
